@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/WEB-INF/templates/default.xhtml">
+    <ui:define name="content">
+
+        <f:metadata>
+            <f:viewParam name="id" value="#{projectEdit.project}"
+                         converter="#{projectConverter}" converterMessage="Unknown project, please use a link from within the system."
+                         required="true" requiredMessage="Bad request, please use a link from within the system."
+            />
+        </f:metadata>
+
+        <h:messages />
+
+        <p>
+            <h:link value="Back to projects screen" outcome="/index"> </h:link>
+        </p>
+
+        <h:form id="prjEdit">
+            <h2>Edit project name</h2>
+            <h:inputText value="#{projectEdit.project.name}" />
+            <h:commandButton value="save" action="#{projectEdit.save}" />
+        </h:form>
+
+        <h:form>
+        <h2>Tasks</h2>
+        <h:panelGroup rendered="#{empty projectEdit.project.tasks}">
+            <em>No tasks.</em>
+        </h:panelGroup>
+            <h:dataTable var="_task" value="#{projectEdit.project.tasks}"
+                         rendered="#{not empty projectEdit.project.tasks}"
+                         styleClass="simpletablestyle">
+                <h:column>
+                    <f:facet name="header">Id</f:facet>
+                    #{_task.id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Name</f:facet>
+                    <h:inputText value="#{_task.name}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Description</f:facet>
+                    <h:inputText value="#{_task.description}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Assignee</f:facet>
+                    <h:inputText value="#{_task.assignee}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Status</f:facet>
+                    <h:inputText value="#{_task.status}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Creation Date</f:facet>
+                    #{_task.creationDate}
+                </h:column>
+            </h:dataTable>
+            <h:commandButton value="save" action="#{projectEdit.save}" />
+
+        </h:form>
+
+        <h:form id="createTask">
+            <h2>New task</h2>
+            <h:panelGrid columns="3" columnClasses="titleCell">
+                <h:outputLabel for="taskName" value="Name:" />
+                <h:inputText id="taskName" value="#{newTask.name}" />
+                <h:message for="taskName" errorClass="invalid" />
+
+                <h:outputLabel for="taskDescription" value="Description:" />
+                <h:inputText id="taskDescription" value="#{newTask.description}" />
+                <h:message for="taskDescription" errorClass="invalid" />
+
+                <h:outputLabel for="taskAssignee" value="Assignee:" />
+                <h:inputText id="taskAssignee" value="#{newTask.assignee}" />
+                <h:message for="taskAssignee" errorClass="invalid" />
+
+                <h:outputLabel for="taskStatus" value="Status:" />
+                <h:inputText id="taskStatus" value="#{newTask.status}" />
+                <h:message for="taskStatus" errorClass="invalid" />
+            </h:panelGrid>
+
+            <p>
+                <h:panelGrid columns="2">
+                    <h:commandButton id="create"
+                                     action="#{taskController.create}"
+                                     value="Create" styleClass="register"/>
+                    <h:commandButton value="Create using REST POST call" action="#{taskController.createPost}" />
+                    <h:messages styleClass="messages"
+                                errorClass="invalid" infoClass="valid"
+                                warnClass="warning" globalOnly="true" />
+                </h:panelGrid>
+            </p>
+        </h:form>
+
+        <p>
+            <h:link value="Back to projects screen" outcome="/index"> </h:link>
+        </p>
+
+    </ui:define>
+</ui:composition>
+
+

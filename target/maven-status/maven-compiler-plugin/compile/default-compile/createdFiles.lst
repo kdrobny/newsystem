@@ -1,0 +1,14 @@
+newsystem\data\ProjectConverter.class
+newsystem\controller\ProjectController.class
+newsystem\util\Resources.class
+newsystem\service\ProjectService.class
+newsystem\data\ProjectListProducer.class
+newsystem\rest\ProjectResourceRESTService.class
+newsystem\model\Project.class
+newsystem\controller\TaskController.class
+newsystem\model\Project_.class
+newsystem\model\Task_.class
+newsystem\data\ProjectEdit.class
+newsystem\model\Task.class
+newsystem\rest\JaxRsActivator.class
+newsystem\rest\LegacyResourceRESTService.class
